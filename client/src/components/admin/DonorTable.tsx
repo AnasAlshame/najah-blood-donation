@@ -146,50 +146,67 @@ const DonorStatusSelect: React.FC<{
               <th className="py-3.5 px-4 font-bold">#</th>
               <th className="py-3.5 px-4 font-bold">المتبرع</th>
               <th className="py-3.5 px-4 font-bold text-center">فصيلة الدم</th>
+              <th className="py-3.5 px-4 font-bold">معلومات الاتصال (الهاتف والإيميل)</th>
               <th className="py-3.5 px-4 font-bold">الكلية والسكن</th>
               <th className="py-3.5 px-4 font-bold">تاريخ التسجيل (الأقدم بالأعلى)</th>
               <th className="py-3.5 px-4 font-bold text-center">الحالة</th>
-              <th className="py-3.5 px-4 font-bold text-center">التواصل السريع</th>
               <th className="py-3.5 px-4 font-bold text-center">إجراءات</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
             {donors.map((donor, index) => {
-              const formattedPhone = donor.phone.startsWith('0')
-                ? '970' + donor.phone.substring(1)
-                : donor.phone;
-
               return (
                 <tr key={donor._id} className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-3 px-4 font-mono text-slate-400 text-xs">
+                  <td className="py-3.5 px-4 font-mono text-slate-400 text-xs font-bold">
                     {index + 1}
                   </td>
 
                   {/* Donor Info */}
-                  <td className="py-3 px-4">
-                    <div className="font-black text-slate-900 text-sm">{donor.fullName}</div>
+                  <td className="py-3.5 px-4">
+                    <div className="font-black text-slate-900 text-sm sm:text-base">{donor.fullName}</div>
                     <div className="text-xs text-slate-700 font-bold font-mono mt-0.5">الرقم: {donor.studentId}</div>
-                    <div className="text-xs text-slate-700 font-semibold flex items-center gap-1 mt-0.5">
-                      <Mail className="w-3 h-3 text-slate-500" />
-                      <span>{donor.email}</span>
-                    </div>
                   </td>
 
                   {/* Blood Type Badge */}
-                  <td className="py-3 px-4 text-center">
+                  <td className="py-3.5 px-4 text-center">
                     <span dir="ltr" className="inline-block px-3 py-1.5 rounded-xl bg-[#D90429] text-white font-black text-sm shadow-sm shadow-red-500/20">
                       {donor.bloodType}
                     </span>
                   </td>
 
+                  {/* Contact Info: Email & Phone with Prefix as entered */}
+                  <td className="py-3.5 px-4">
+                    <div className="flex flex-col gap-1.5">
+                      {/* Phone with prefix */}
+                      <a
+                        href={`tel:${donor.phone}`}
+                        className="inline-flex items-center gap-2 text-xs sm:text-sm font-black text-[#002B49] hover:text-[#00A3E0] transition-colors"
+                        title="اتصال بالمتبرع"
+                      >
+                        <Phone className="w-3.5 h-3.5 text-[#00A3E0] shrink-0" />
+                        <span dir="ltr" className="font-mono tracking-wide">{donor.phone}</span>
+                      </a>
+
+                      {/* Email */}
+                      <a
+                        href={`mailto:${donor.email}`}
+                        className="inline-flex items-center gap-2 text-xs font-bold text-slate-700 hover:text-[#00A3E0] transition-colors"
+                        title="إرسال بريد إلكتروني"
+                      >
+                        <Mail className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                        <span dir="ltr" className="font-mono truncate max-w-[200px]">{donor.email}</span>
+                      </a>
+                    </div>
+                  </td>
+
                   {/* Faculty & City */}
-                  <td className="py-3 px-4">
+                  <td className="py-3.5 px-4">
                     <div className="text-xs sm:text-sm font-black text-slate-900">{donor.faculty}</div>
                     <div className="text-xs text-slate-700 font-bold mt-0.5">📍 {donor.city}</div>
                   </td>
 
                   {/* Registered Date & Last Donation */}
-                  <td className="py-3 px-4 text-xs font-bold text-slate-800">
+                  <td className="py-3.5 px-4 text-xs font-bold text-slate-800">
                     <div>
                       {new Date(donor.createdAt).toLocaleDateString('ar-EG', {
                         year: 'numeric',
@@ -206,36 +223,11 @@ const DonorStatusSelect: React.FC<{
                   </td>
 
                   {/* Status Dropdown */}
-                  <td className="py-3 px-4 text-center">
+                  <td className="py-3.5 px-4 text-center">
                     <DonorStatusSelect
                       status={donor.status}
                       onChange={(newStatus) => onStatusChange(donor._id, newStatus)}
                     />
-                  </td>
-
-                  {/* Direct Contact Buttons */}
-                  <td className="py-3 px-4 text-center">
-                    <div className="flex items-center justify-center gap-2">
-                      {/* WhatsApp Button */}
-                      <a
-                        href={`https://wa.me/${formattedPhone}?text=${encodeURIComponent('السلام عليكم زميلنا في جامعة النجاح الوطنية، بخصوص طلب متبرع دم طارئ...')}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-8 h-8 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center transition-transform hover:scale-110 shadow-xs"
-                        title="مراسلة عبر واتساب"
-                      >
-                        <MessageCircle className="w-4 h-4" />
-                      </a>
-
-                      {/* Phone Call Button */}
-                      <a
-                        href={`tel:${donor.phone}`}
-                        className="w-8 h-8 rounded-lg bg-[#002B49] hover:bg-[#0B3A60] text-white flex items-center justify-center transition-transform hover:scale-110 shadow-xs"
-                        title="اتصال هاتفي"
-                      >
-                        <Phone className="w-4 h-4" />
-                      </a>
-                    </div>
                   </td>
 
                   {/* Actions */}
