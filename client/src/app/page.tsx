@@ -26,10 +26,12 @@ export default function HomePage() {
             <Sparkles className="w-4 h-4 text-[#00A3E0]" />
           </div>
 
-          {/* Clean, perfectly readable Arabic Quranic Ayah */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#002B49] tracking-normal leading-tight max-w-4xl mx-auto">
-            ( وَمَنْ أَحْيَاهَا فَكَأَنَّمَا أَحْيَا النَّاسَ جَمِيعًا )
-          </h1>
+          {/* Clean, perfectly readable Arabic Quranic Ayah on a single line */}
+          <div className="w-full overflow-hidden px-2">
+            <h1 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-[#002B49] tracking-normal leading-normal whitespace-nowrap text-center mx-auto">
+              ( وَمَنْ أَحْيَاهَا فَكَأَنَّمَا أَحْيَا النَّاسَ جَمِيعًا )
+            </h1>
+          </div>
           
           <p className="mt-5 text-base sm:text-lg text-slate-700 max-w-3xl mx-auto leading-relaxed font-semibold">
             منظومة إنسانية جامعية متكاملة وموثوقة لربط المرضى في المستشفيات بالمتبرعين من طلبة جامعة النجاح الوطنية في حالات الطوارئ الطبية وبسرية تامة.
