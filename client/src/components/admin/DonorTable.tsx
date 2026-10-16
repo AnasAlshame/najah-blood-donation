@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
-import { Phone, MessageCircle, Mail, Calendar, Trash2, CheckCircle2, Clock, XCircle } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Phone, MessageCircle, Mail, Calendar, Trash2, CheckCircle2, Clock, XCircle, ChevronDown, Check } from 'lucide-react';
 import { IDonor } from '../../types';
 
 interface DonorTableProps {
@@ -35,32 +35,107 @@ export const DonorTable: React.FC<DonorTableProps> = ({
     );
   }
 
-  const getStatusBadge = (status: string) => {
-    switch (status) {
+const STATUS_OPTIONS = [
+  { value: 'available', label: 'متاح للتبرع', color: 'emerald' },
+  { value: 'donated_recently', label: 'تبرع مؤخراً', color: 'amber' },
+  { value: 'unavailable', label: 'غير متاح', color: 'rose' }
+];
+
+const DonorStatusSelect: React.FC<{
+  status: string;
+  onChange: (newStatus: string) => void;
+}> = ({ status, onChange }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const currentOption = STATUS_OPTIONS.find((s) => s.value === status) || STATUS_OPTIONS[0];
+
+  const getBadgeStyle = (val: string) => {
+    switch (val) {
       case 'available':
-        return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-            <CheckCircle2 className="w-3 h-3" />
-            <span>متاح للتبرع</span>
-          </span>
-        );
+        return 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:border-emerald-500';
       case 'donated_recently':
-        return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
-            <Clock className="w-3 h-3" />
-            <span>تبرع مؤخراً</span>
-          </span>
-        );
+        return 'bg-amber-50 text-amber-800 border-amber-300 hover:border-amber-500';
       case 'unavailable':
       default:
-        return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200">
-            <XCircle className="w-3 h-3" />
-            <span>غير متاح</span>
-          </span>
-        );
+        return 'bg-rose-50 text-rose-800 border-rose-300 hover:border-rose-500';
     }
   };
+
+  const getIcon = (val: string) => {
+    switch (val) {
+      case 'available':
+        return <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />;
+      case 'donated_recently':
+        return <Clock className="w-3.5 h-3.5 text-amber-600 shrink-0" />;
+      case 'unavailable':
+      default:
+        return <XCircle className="w-3.5 h-3.5 text-rose-600 shrink-0" />;
+    }
+  };
+
+  return (
+    <div className="relative inline-block text-right" ref={dropdownRef}>
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className={`px-3 py-1.5 rounded-xl text-xs font-black border-2 transition-all flex items-center gap-2 cursor-pointer shadow-2xs ${getBadgeStyle(
+          status
+        )} ${isOpen ? 'ring-2 ring-[#00A3E0]/30 border-[#00A3E0]' : ''}`}
+      >
+        <div className="flex items-center gap-1.5">
+          {getIcon(status)}
+          <span>{currentOption.label}</span>
+        </div>
+        <ChevronDown
+          className={`w-3.5 h-3.5 transition-transform duration-200 text-slate-500 ${
+            isOpen ? 'rotate-180 text-[#00A3E0]' : ''
+          }`}
+        />
+      </button>
+
+      {/* Smooth Downward Menu */}
+      {isOpen && (
+        <div className="absolute z-50 top-full mt-1.5 right-0 min-w-[140px] bg-white rounded-xl border-2 border-slate-200 shadow-2xl py-1 animate-in fade-in-50 zoom-in-95 duration-150">
+          {STATUS_OPTIONS.map((opt) => {
+            const isSelected = opt.value === status;
+            return (
+              <button
+                type="button"
+                key={opt.value}
+                onClick={() => {
+                  onChange(opt.value);
+                  setIsOpen(false);
+                }}
+                className={`w-full px-3 py-2 text-xs font-bold flex items-center justify-between transition-colors text-right cursor-pointer ${
+                  isSelected
+                    ? 'bg-cyan-50 text-[#002B49]'
+                    : 'text-slate-700 hover:bg-slate-50 hover:text-[#00A3E0]'
+                }`}
+              >
+                <div className="flex items-center gap-1.5">
+                  {getIcon(opt.value)}
+                  <span>{opt.label}</span>
+                </div>
+                {isSelected && <Check className="w-3.5 h-3.5 text-[#00A3E0] shrink-0" />}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
@@ -132,16 +207,10 @@ export const DonorTable: React.FC<DonorTableProps> = ({
 
                   {/* Status Dropdown */}
                   <td className="py-3 px-4 text-center">
-                    <div className="mb-1">{getStatusBadge(donor.status)}</div>
-                    <select
-                      value={donor.status}
-                      onChange={(e) => onStatusChange(donor._id, e.target.value)}
-                      className="text-[11px] bg-slate-50 border border-slate-200 rounded px-1.5 py-1 text-slate-700 cursor-pointer focus:outline-none"
-                    >
-                      <option value="available">متاح</option>
-                      <option value="donated_recently">تبرع مؤخراً</option>
-                      <option value="unavailable">غير متاح</option>
-                    </select>
+                    <DonorStatusSelect
+                      status={donor.status}
+                      onChange={(newStatus) => onStatusChange(donor._id, newStatus)}
+                    />
                   </td>
 
                   {/* Direct Contact Buttons */}
