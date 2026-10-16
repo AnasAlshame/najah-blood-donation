@@ -1,12 +1,20 @@
 import mongoose from 'mongoose';
+import fs from 'fs';
+import path from 'path';
 
-export const connectDB = async (): Promise<void> => {
+// Check if MongoDB is connected
+export const isMongoConnected = (): boolean => {
+  return mongoose.connection.readyState === 1;
+};
+
+export const connectDB = async (): Promise<boolean> => {
+  const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/najah_blood_db';
   try {
-    const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/najah_blood_db';
-    await mongoose.connect(mongoUri);
-    console.log(`[Database] MongoDB connected successfully to: ${mongoUri.split('@').pop()}`);
+    await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 2000 });
+    console.log(`[Database] Connected to live MongoDB: ${mongoUri.split('@').pop()}`);
+    return true;
   } catch (error) {
-    console.error('[Database] MongoDB connection error:', error);
-    // Don't kill process immediately in dev so app can still serve friendly offline error
+    console.log(`[Database] MongoDB service not running locally at ${mongoUri}. Falling back seamlessly to local persistent JSON file storage!`);
+    return false;
   }
 };

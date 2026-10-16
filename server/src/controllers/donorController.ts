@@ -1,21 +1,14 @@
 import { Request, Response } from 'express';
-import { Donor } from '../models/Donor.js';
+import { Donor, IDonor } from '../models/Donor.js';
+import { isMongoConnected } from '../config/db.js';
+import { JsonStore } from '../utils/jsonStore.js';
 import { BloodType, BLOOD_COMPATIBILITY, VALID_BLOOD_TYPES } from '../utils/bloodCompatibility.js';
+
+const donorStore = new JsonStore<any>('donors');
 
 export const registerDonor = async (req: Request, res: Response): Promise<void> => {
   try {
-    const {
-      fullName,
-      studentId,
-      email,
-      phone,
-      bloodType,
-      faculty,
-      city,
-      lastDonationDate,
-      healthCheckPassed,
-      notes
-    } = req.body;
+    const { fullName, studentId, email, phone, bloodType, faculty, city, lastDonationDate, healthCheckPassed, notes } = req.body;
 
     if (!fullName || !studentId || !email || !phone || !bloodType || !faculty || !city) {
       res.status(400).json({ success: false, message: 'يرجى تعبئة كافة الحقول الإلزامية' });
@@ -27,7 +20,7 @@ export const registerDonor = async (req: Request, res: Response): Promise<void> 
       return;
     }
 
-    const donor = new Donor({
+    const donorData = {
       fullName: fullName.trim(),
       studentId: studentId.trim(),
       email: email.trim().toLowerCase(),
@@ -39,21 +32,18 @@ export const registerDonor = async (req: Request, res: Response): Promise<void> 
       healthCheckPassed: healthCheckPassed ?? true,
       notes: notes?.trim(),
       status: 'available'
-    });
+    };
 
-    await donor.save();
+    if (isMongoConnected()) {
+      const donor = new Donor(donorData);
+      await donor.save();
+      res.status(201).json({ success: true, message: 'تم تسجيلك كمتبرع بالدم بنجاح!', data: { id: donor._id } });
+      return;
+    }
 
-    res.status(201).json({
-      success: true,
-      message: 'شكراً لك! تم تسجيلك كمتبرع بالدم بنجاح وحفظ بياناتك بشكل آمن.',
-      data: {
-        id: donor._id,
-        fullName: donor.fullName,
-        bloodType: donor.bloodType
-      }
-    });
+    const saved = await donorStore.create(donorData);
+    res.status(201).json({ success: true, message: 'تم تسجيلك كمتبرع بالدم بنجاح!', data: { id: saved._id } });
   } catch (error: any) {
-    console.error('Error registering donor:', error);
     res.status(500).json({ success: false, message: 'فشل حفظ بيانات المتبرع', error: error.message });
   }
 };
@@ -62,99 +52,80 @@ export const getDonors = async (req: Request, res: Response): Promise<void> => {
   try {
     const { bloodType, matchCompatible, faculty, city, status, search } = req.query;
 
-    const filter: any = {};
+    if (isMongoConnected()) {
+      const filter: any = {};
+      if (bloodType && typeof bloodType === 'string') {
+        const bType = bloodType.trim() as BloodType;
+        filter.bloodType = matchCompatible === 'true' && BLOOD_COMPATIBILITY[bType] ? { $in: BLOOD_COMPATIBILITY[bType] } : bType;
+      }
+      if (faculty && faculty !== 'all') filter.faculty = faculty;
+      if (city && city !== 'all') filter.city = city;
+      if (status && status !== 'all') filter.status = status;
+      if (search && typeof search === 'string' && search.trim() !== '') {
+        const term = search.trim();
+        filter.$or = [{ fullName: { $regex: term, $options: 'i' } }, { studentId: { $regex: term, $options: 'i' } }, { phone: { $regex: term, $options: 'i' } }];
+      }
+      const donors = await Donor.find(filter).sort({ createdAt: 1 });
+      res.status(200).json({ success: true, count: donors.length, data: donors });
+      return;
+    }
 
+    // JSON Store fallback
+    let all = await donorStore.find();
     if (bloodType && typeof bloodType === 'string') {
       const bType = bloodType.trim() as BloodType;
-      if (matchCompatible === 'true' && BLOOD_COMPATIBILITY[bType]) {
-        // Find donors whose blood can be given to this blood type
-        filter.bloodType = { $in: BLOOD_COMPATIBILITY[bType] };
-      } else {
-        // Exact blood type match
-        filter.bloodType = bType;
-      }
+      const allowed = matchCompatible === 'true' && BLOOD_COMPATIBILITY[bType] ? BLOOD_COMPATIBILITY[bType] : [bType];
+      all = all.filter((d) => allowed.includes(d.bloodType));
     }
-
-    if (faculty && typeof faculty === 'string' && faculty !== 'all') {
-      filter.faculty = faculty;
-    }
-
-    if (city && typeof city === 'string' && city !== 'all') {
-      filter.city = city;
-    }
-
-    if (status && typeof status === 'string' && status !== 'all') {
-      filter.status = status;
-    }
-
+    if (faculty && faculty !== 'all') all = all.filter((d) => d.faculty === faculty);
+    if (city && city !== 'all') all = all.filter((d) => d.city === city);
+    if (status && status !== 'all') all = all.filter((d) => d.status === status);
     if (search && typeof search === 'string' && search.trim() !== '') {
-      const term = search.trim();
-      filter.$or = [
-        { fullName: { $regex: term, $options: 'i' } },
-        { studentId: { $regex: term, $options: 'i' } },
-        { email: { $regex: term, $options: 'i' } },
-        { phone: { $regex: term, $options: 'i' } }
-      ];
+      const term = search.trim().toLowerCase();
+      all = all.filter((d) => (d.fullName || '').toLowerCase().includes(term) || (d.studentId || '').includes(term) || (d.phone || '').includes(term));
     }
-
-    // Sort: OLDEST FIRST (createdAt: 1) as explicitly requested by user
-    const donors = await Donor.find(filter).sort({ createdAt: 1 });
-
-    res.status(200).json({
-      success: true,
-      count: donors.length,
-      data: donors
-    });
+    all.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+    res.status(200).json({ success: true, count: all.length, data: all });
   } catch (error: any) {
-    console.error('Error fetching donors:', error);
-    res.status(500).json({ success: false, message: 'حدث خطأ أثناء جلب بيانات المتبرعين', error: error.message });
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء جلب المتبرعين', error: error.message });
   }
 };
 
 export const updateDonorStatus = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { id } = req.params;
-    const { status, lastDonationDate, notes } = req.body;
-
-    const donor = await Donor.findById(id);
-    if (!donor) {
-      res.status(404).json({ success: false, message: 'المتبرع غير موجود' });
+    const donorId = String(req.params.id);
+    const { status, notes } = req.body;
+    if (isMongoConnected()) {
+      const donor = await Donor.findById(donorId);
+      if (!donor) { res.status(404).json({ success: false, message: 'المتبرع غير موجود' }); return; }
+      if (status) donor.status = status as any;
+      if (notes !== undefined) donor.notes = notes;
+      await donor.save();
+      res.status(200).json({ success: true, message: 'تم تحديث الحالة بنجاح', data: donor });
       return;
     }
 
-    if (status) donor.status = status;
-    if (lastDonationDate) donor.lastDonationDate = new Date(lastDonationDate);
-    if (notes !== undefined) donor.notes = notes;
-
-    await donor.save();
-
-    res.status(200).json({
-      success: true,
-      message: 'تم تحديث بيانات وحالة المتبرع بنجاح',
-      data: donor
-    });
+    const updated = await donorStore.findByIdAndUpdate(donorId, { status, notes });
+    if (!updated) { res.status(404).json({ success: false, message: 'المتبرع غير موجود' }); return; }
+    res.status(200).json({ success: true, message: 'تم تحديث الحالة بنجاح', data: updated });
   } catch (error: any) {
-    console.error('Error updating donor:', error);
     res.status(500).json({ success: false, message: 'حدث خطأ أثناء التحديث', error: error.message });
   }
 };
 
 export const deleteDonor = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { id } = req.params;
-    const donor = await Donor.findByIdAndDelete(id);
-
-    if (!donor) {
-      res.status(404).json({ success: false, message: 'المتبرع غير موجود' });
+    const donorId = String(req.params.id);
+    if (isMongoConnected()) {
+      const donor = await Donor.findByIdAndDelete(donorId);
+      if (!donor) { res.status(404).json({ success: false, message: 'المتبرع غير موجود' }); return; }
+      res.status(200).json({ success: true, message: 'تم الحذف بنجاح' });
       return;
     }
-
-    res.status(200).json({
-      success: true,
-      message: 'تم حذف المتبرع بنجاح'
-    });
+    const deleted = await donorStore.findByIdAndDelete(donorId);
+    if (!deleted) { res.status(404).json({ success: false, message: 'المتبرع غير موجود' }); return; }
+    res.status(200).json({ success: true, message: 'تم الحذف بنجاح' });
   } catch (error: any) {
-    console.error('Error deleting donor:', error);
     res.status(500).json({ success: false, message: 'حدث خطأ أثناء الحذف', error: error.message });
   }
 };
