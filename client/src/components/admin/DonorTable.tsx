@@ -146,9 +146,15 @@ const DonorStatusSelect: React.FC<{
               <th className="py-3.5 px-4 font-bold">#</th>
               <th className="py-3.5 px-4 font-bold">المتبرع</th>
               <th className="py-3.5 px-4 font-bold text-center">فصيلة الدم</th>
-              <th className="py-3.5 px-4 font-bold">معلومات الاتصال (الهاتف والإيميل)</th>
+              <th className="py-3.5 px-4 font-bold">
+                <div>معلومات الاتصال</div>
+                <div className="text-[11px] text-cyan-200 font-semibold mt-0.5">(الهاتف والإيميل)</div>
+              </th>
               <th className="py-3.5 px-4 font-bold">الكلية والسكن</th>
-              <th className="py-3.5 px-4 font-bold">تاريخ التسجيل (الأقدم بالأعلى)</th>
+              <th className="py-3.5 px-4 font-bold">
+                <div>تاريخ التسجيل</div>
+                <div className="text-[11px] text-cyan-200 font-semibold mt-0.5">(الأقدم بالأعلى)</div>
+              </th>
               <th className="py-3.5 px-4 font-bold text-center">الحالة</th>
               <th className="py-3.5 px-4 font-bold text-center">إجراءات</th>
             </tr>
