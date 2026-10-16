@@ -3,6 +3,7 @@ import { User, GraduationCap, Mail, Phone, MapPin, Calendar } from 'lucide-react
 import { DonorRegistrationInput } from '../../types';
 import { AN_NAJAH_FACULTIES, PALESTINIAN_CITIES } from '../../services/constants';
 import { CustomSelect } from '../common/CustomSelect';
+import { CustomDatePicker } from '../common/CustomDatePicker';
 
 interface PersonalFieldsProps {
   formData: DonorRegistrationInput;
@@ -104,21 +105,13 @@ export const DonorPersonalFields: React.FC<PersonalFieldsProps> = ({ formData, s
         icon={<MapPin className="w-5 h-5" />}
       />
 
-      {/* Last Donation Date */}
-      <div>
-        <label className="block text-sm font-bold text-slate-800 mb-2">
-          تاريخ آخر تبرع بالدم (إن وجد)
-        </label>
-        <div className="relative">
-          <Calendar className="w-5 h-5 text-slate-400 absolute right-4 top-4" />
-          <input
-            type="date"
-            value={formData.lastDonationDate}
-            onChange={(e) => setFormData({ ...formData, lastDonationDate: e.target.value })}
-            className="w-full pr-12 pl-4 py-3.5 text-base font-semibold text-slate-900 rounded-2xl border-2 border-slate-200 focus:outline-none focus:border-[#00A3E0] bg-white cursor-pointer"
-          />
-        </div>
-      </div>
+      {/* Last Donation Date with CustomDatePicker */}
+      <CustomDatePicker
+        label="تاريخ آخر تبرع بالدم (إن وجد)"
+        value={formData.lastDonationDate}
+        onChange={(isoDate) => setFormData({ ...formData, lastDonationDate: isoDate })}
+        placeholder="dd/mm/yyyy"
+      />
 
       {/* Health Check */}
       <div className="flex items-center gap-3.5 pt-4 sm:pt-6">
