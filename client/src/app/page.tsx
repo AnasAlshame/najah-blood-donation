@@ -33,7 +33,7 @@ export default function HomePage() {
             </h1>
           </div>
           
-          <p className="mt-4 text-base sm:text-lg text-slate-700 max-w-2xl mx-auto leading-relaxed font-normal">
+          <p className="mt-4 text-base sm:text-lg text-slate-800 max-w-2xl mx-auto leading-relaxed font-medium">
             منظومة إنسانية جامعية متكاملة وموثوقة لربط المرضى في المستشفيات بالمتبرعين من طلبة جامعة النجاح الوطنية في حالات الطوارئ الطبية وبسرية تامة.
           </p>
 
