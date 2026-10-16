@@ -63,9 +63,6 @@ export const Header: React.FC<HeaderProps> = ({ isAdmin, adminName, onLogout, hi
         <div className="flex items-center gap-3">
           {isAdmin ? (
             <div className="flex items-center gap-3">
-              <span className="hidden md:inline-flex text-xs bg-white/10 text-white/95 px-3.5 py-2 rounded-xl border border-white/15 font-medium">
-                مرحباً، {adminName || 'المسؤول'}
-              </span>
               <button
                 onClick={onLogout}
                 className="text-xs sm:text-sm bg-[#D90429] hover:bg-[#b00321] text-white font-bold px-4 py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer"

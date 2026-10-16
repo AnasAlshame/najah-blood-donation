@@ -173,26 +173,6 @@ export default function AdminPage() {
           </div>
         ) : (
           <div className="space-y-6">
-            
-            {/* Top Admin Welcome Card */}
-            <div className="bg-[#002B49] rounded-2xl p-6 text-white flex flex-col sm:flex-row items-center justify-between gap-4 border-b-4 border-[#00A3E0] shadow-md">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center border border-white/20">
-                  <ShieldCheck className="w-6 h-6 text-[#00A3E0]" />
-                </div>
-                <div>
-                  <h1 className="text-xl font-bold">لوحة إدارة بنك الدم والبحث الفوري</h1>
-                  <p className="text-xs text-cyan-200 mt-0.5">
-                    التحكم بالمتبرعين، فحص التوافق الحيوي للفصائل، وسرعة الاستجابة الطارئة
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-xl border border-white/15 text-xs">
-                <span>المسؤول الحالي:</span>
-                <span className="font-bold text-[#00A3E0]">{admin.fullName}</span>
-              </div>
-            </div>
 
             {/* Notification alert */}
             {notification && (
