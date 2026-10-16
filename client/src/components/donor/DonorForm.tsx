@@ -84,9 +84,9 @@ export const DonorForm: React.FC = () => {
           </div>
         </div>
 
-        <div className="mt-5 flex items-center gap-3 text-xs sm:text-sm bg-white/10 border border-white/20 rounded-xl px-4 py-2.5 text-slate-100 font-medium">
-          <ShieldCheck className="w-5 h-5 text-[#00A3E0] shrink-0" />
-          <span>خصوصية تامة: بياناتك لا تظهر للعامة ومحفوظة لدى الإدارة الطبية بالجامعة فقط للاتصال بك عند الحاجة الطارئة.</span>
+        <div className="mt-5 flex items-center gap-3.5 text-sm sm:text-base bg-white/15 border-2 border-white/25 rounded-2xl px-5 py-3 text-white font-bold shadow-xs">
+          <ShieldCheck className="w-6 h-6 text-[#00A3E0] shrink-0 drop-shadow-xs" />
+          <span className="leading-relaxed">خصوصية تامة: بياناتك لا تظهر للعامة ومحفوظة لدى الإدارة الطبية بالجامعة فقط للاتصال بك عند الحاجة الطارئة.</span>
         </div>
       </div>
 
