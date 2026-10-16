@@ -24,6 +24,7 @@ export const BloodTypeSelector: React.FC<BloodTypeSelectorProps> = ({
               type="button"
               key={type}
               onClick={() => onChange(type)}
+              dir="ltr"
               className={`py-3.5 px-2 rounded-2xl text-center font-black text-lg transition-all border-2 cursor-pointer ${
                 isSelected
                   ? 'bg-[#D90429] text-white border-[#D90429] shadow-lg shadow-red-500/40 scale-105 ring-2 ring-red-300'
