@@ -123,11 +123,15 @@ export const DonorForm: React.FC = () => {
             ملاحظات إضافية (اختياري)
           </label>
           <textarea
-            rows={3}
+            rows={2}
             value={formData.notes}
+            onInput={(e: any) => {
+              e.target.style.height = 'auto';
+              e.target.style.height = e.target.scrollHeight + 'px';
+            }}
             onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
             placeholder="أي تفاصيل تود إضافتها (مثل: أوقات الفراغ للتبرع، إلخ)..."
-            className="w-full p-4 text-base font-semibold text-slate-900 rounded-2xl border-2 border-slate-200 focus:outline-none focus:border-[#00A3E0] focus:ring-4 focus:ring-[#00A3E0]/15 transition-all bg-white"
+            className="w-full p-4 text-base font-semibold text-slate-900 rounded-2xl border-2 border-slate-200 focus:outline-none focus:border-[#00A3E0] focus:ring-4 focus:ring-[#00A3E0]/15 transition-all bg-white resize-none overflow-hidden"
           />
         </div>
 
@@ -143,7 +147,6 @@ export const DonorForm: React.FC = () => {
               <>
                 <Heart className="w-6 h-6 text-[#D90429] fill-[#D90429] group-hover:scale-125 transition-transform shrink-0" />
                 <span>تأكيد التسجيل كمتبرع بالدم</span>
-                <Sparkles className="w-5 h-5 text-[#00A3E0] shrink-0" />
               </>
             )}
           </button>

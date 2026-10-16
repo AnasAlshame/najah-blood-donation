@@ -23,7 +23,6 @@ export default function HomePage() {
             <span className="text-sm sm:text-base font-bold text-[#002B49] tracking-normal">
               بوابة التبرع الطوعي بالدم | طلبة جامعة النجاح الوطنية
             </span>
-            <Sparkles className="w-4 h-4 text-[#00A3E0]" />
           </div>
 
           {/* Clean, perfectly readable Arabic Quranic Ayah on a single line */}

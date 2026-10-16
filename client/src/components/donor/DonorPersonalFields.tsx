@@ -113,22 +113,51 @@ export const DonorPersonalFields: React.FC<PersonalFieldsProps> = ({ formData, s
         placeholder="dd/mm/yyyy"
       />
 
-      {/* Age Input */}
+      {/* Age Input with Custom Smooth Steppers */}
       <div>
         <label className="block text-sm font-bold text-slate-800 mb-2">
           العمر (سنة) <span className="text-red-500">*</span>
         </label>
-        <div className="relative">
+        <div className="relative flex items-center">
           <input
             type="number"
             min={17}
-            max={65}
+            max={70}
             required
             value={formData.age ?? ''}
-            onChange={(e) => setFormData({ ...formData, age: e.target.value ? parseInt(e.target.value, 10) : undefined })}
+            onChange={(e) => {
+              const val = e.target.value ? parseInt(e.target.value, 10) : undefined;
+              setFormData({ ...formData, age: val });
+            }}
             placeholder="مثال: 20"
-            className="w-full px-4 py-3.5 text-base font-semibold text-slate-900 rounded-2xl border-2 border-slate-200 focus:outline-none focus:border-[#00A3E0] focus:ring-4 focus:ring-[#00A3E0]/15 transition-all bg-white"
+            className="w-full pr-4 pl-24 py-3.5 text-base font-semibold text-slate-900 rounded-2xl border-2 border-slate-200 focus:outline-none focus:border-[#00A3E0] focus:ring-4 focus:ring-[#00A3E0]/15 transition-all bg-white"
           />
+
+          {/* Smooth custom step buttons */}
+          <div className="absolute left-2 flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200">
+            <button
+              type="button"
+              onClick={() => {
+                const current = formData.age ?? 20;
+                if (current > 17) setFormData({ ...formData, age: current - 1 });
+              }}
+              className="w-8 h-8 rounded-lg bg-white hover:bg-slate-200 text-slate-700 font-black text-lg flex items-center justify-center transition-all shadow-xs cursor-pointer select-none active:scale-90"
+              title="تقليل العمر"
+            >
+              -
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                const current = formData.age ?? 20;
+                if (current < 70) setFormData({ ...formData, age: current + 1 });
+              }}
+              className="w-8 h-8 rounded-lg bg-white hover:bg-slate-200 text-slate-700 font-black text-lg flex items-center justify-center transition-all shadow-xs cursor-pointer select-none active:scale-90"
+              title="زيادة العمر"
+            >
+              +
+            </button>
+          </div>
         </div>
       </div>
     </div>
