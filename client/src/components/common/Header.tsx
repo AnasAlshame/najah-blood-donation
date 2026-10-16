@@ -1,15 +1,21 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { ShieldCheck, Droplet } from 'lucide-react';
 
 interface HeaderProps {
   isAdmin?: boolean;
   adminName?: string;
   onLogout?: () => void;
+  hideAdminButton?: boolean;
 }
 
-export const Header: React.FC<HeaderProps> = ({ isAdmin, adminName, onLogout }) => {
+export const Header: React.FC<HeaderProps> = ({ isAdmin, adminName, onLogout, hideAdminButton }) => {
+  const pathname = usePathname();
+  const isLoginPage = pathname === '/admin' || hideAdminButton;
   return (
     <header className="bg-gradient-to-r from-[#001f35] via-[#002B49] to-[#001f35] text-white shadow-xl border-b-4 border-[#00A3E0] sticky top-0 z-50 w-full backdrop-blur-md">
       <div className="w-full px-6 sm:px-10 lg:px-14 h-22 flex items-center justify-between">
@@ -67,7 +73,7 @@ export const Header: React.FC<HeaderProps> = ({ isAdmin, adminName, onLogout }) 
                 تسجيل الخروج
               </button>
             </div>
-          ) : (
+          ) : isLoginPage ? null : (
             <Link
               href="/admin"
               className="flex items-center gap-2 text-xs sm:text-sm font-bold text-white bg-white/10 hover:bg-[#00A3E0] px-4 sm:px-5 py-2.5 rounded-xl border border-white/20 hover:border-[#00A3E0] transition-all shadow-sm hover:shadow-lg hover:-translate-y-0.5 group cursor-pointer"
