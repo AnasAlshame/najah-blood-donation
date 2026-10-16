@@ -66,24 +66,26 @@ export const DonorForm: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto bg-white rounded-2xl shadow-xl border border-slate-200/80 overflow-hidden">
+    <div className="w-full max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl border-2 border-slate-200/90 overflow-hidden">
       
       {/* Banner */}
-      <div className="bg-gradient-to-r from-[#002B49] via-[#0B3A60] to-[#002B49] p-6 sm:p-8 text-white">
-        <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-[#D90429] flex items-center justify-center shadow-lg shadow-red-900/40">
-            <Heart className="w-7 h-7 text-white fill-white animate-pulse" />
+      <div className="bg-gradient-to-r from-[#002B49] via-[#0B3A60] to-[#002B49] p-8 sm:p-10 text-white">
+        <div className="flex items-center gap-5">
+          <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-2xl bg-[#D90429] flex items-center justify-center shadow-xl shadow-red-950/40 shrink-0">
+            <Heart className="w-9 h-9 sm:w-10 sm:h-10 text-white fill-white animate-pulse" />
           </div>
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold">تسجيل متبرع بالدم - طلبة جامعة النجاح</h2>
-            <p className="text-sm text-cyan-200 mt-1">
+            <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
+              تسجيل متبرع بالدم - طلبة جامعة النجاح
+            </h2>
+            <p className="text-sm sm:text-base text-cyan-200 font-semibold mt-1.5">
               قطرة دم تنبض بالأمل.. ساهم في إنقاذ حياة مريض عند الحاجة
             </p>
           </div>
         </div>
 
-        <div className="mt-4 flex items-center gap-2 text-xs bg-white/10 border border-white/20 rounded-xl px-3.5 py-2 text-slate-200">
-          <ShieldCheck className="w-4 h-4 text-[#00A3E0] shrink-0" />
+        <div className="mt-5 flex items-center gap-3 text-xs sm:text-sm bg-white/10 border border-white/20 rounded-xl px-4 py-2.5 text-slate-100 font-medium">
+          <ShieldCheck className="w-5 h-5 text-[#00A3E0] shrink-0" />
           <span>خصوصية تامة: بياناتك لا تظهر للعامة ومحفوظة لدى الإدارة الطبية بالجامعة فقط للاتصال بك عند الحاجة الطارئة.</span>
         </div>
       </div>
@@ -117,31 +119,31 @@ export const DonorForm: React.FC = () => {
         <DonorPersonalFields formData={formData} setFormData={setFormData} />
 
         <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+          <label className="block text-sm font-bold text-slate-800 mb-2">
             ملاحظات إضافية (اختياري)
           </label>
           <textarea
-            rows={2}
+            rows={3}
             value={formData.notes}
             onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
             placeholder="أي تفاصيل تود إضافتها (مثل: أوقات الفراغ للتبرع، إلخ)..."
-            className="w-full p-3.5 text-sm rounded-xl border border-slate-300 focus:outline-none focus:border-[#00A3E0] focus:ring-2 focus:ring-[#00A3E0]/20"
+            className="w-full p-4 text-base font-semibold text-slate-900 rounded-2xl border-2 border-slate-200 focus:outline-none focus:border-[#00A3E0] focus:ring-4 focus:ring-[#00A3E0]/15 transition-all bg-white"
           />
         </div>
 
-        <div>
+        <div className="pt-2">
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 px-6 rounded-xl bg-[#002B49] hover:bg-[#0B3A60] text-white font-bold text-base shadow-lg shadow-slate-900/10 hover:shadow-xl transition-all flex items-center justify-center gap-2 group cursor-pointer disabled:opacity-50"
+            className="w-full py-4 px-8 rounded-2xl bg-[#002B49] hover:bg-[#0B3A60] text-white font-black text-lg shadow-xl shadow-slate-950/20 hover:shadow-2xl transition-all flex items-center justify-center gap-3 group cursor-pointer disabled:opacity-50"
           >
             {loading ? (
               <span>جاري حفظ البيانات...</span>
             ) : (
               <>
-                <Heart className="w-5 h-5 text-[#D90429] fill-[#D90429] group-hover:scale-125 transition-transform" />
+                <Heart className="w-6 h-6 text-[#D90429] fill-[#D90429] group-hover:scale-125 transition-transform shrink-0" />
                 <span>تأكيد التسجيل كمتبرع بالدم</span>
-                <Sparkles className="w-4 h-4 text-[#00A3E0]" />
+                <Sparkles className="w-5 h-5 text-[#00A3E0] shrink-0" />
               </>
             )}
           </button>

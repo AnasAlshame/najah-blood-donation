@@ -13,10 +13,10 @@ export const BloodTypeSelector: React.FC<BloodTypeSelectorProps> = ({
 }) => {
   return (
     <div>
-      <label className="block text-sm font-bold text-slate-800 mb-2.5">
+      <label className="block text-base font-black text-[#002B49] mb-3">
         فصيلة الدم <span className="text-red-500">*</span>
       </label>
-      <div className="grid grid-cols-4 sm:grid-cols-8 gap-2.5">
+      <div className="grid grid-cols-4 sm:grid-cols-8 gap-3">
         {BLOOD_TYPES.map((type) => {
           const isSelected = selectedType === type;
           return (
@@ -24,10 +24,10 @@ export const BloodTypeSelector: React.FC<BloodTypeSelectorProps> = ({
               type="button"
               key={type}
               onClick={() => onChange(type)}
-              className={`py-3 px-2 rounded-xl text-center font-bold text-base transition-all border ${
+              className={`py-3.5 px-2 rounded-2xl text-center font-black text-lg transition-all border-2 cursor-pointer ${
                 isSelected
-                  ? 'bg-[#D90429] text-white border-[#D90429] shadow-md shadow-red-500/30 scale-105'
-                  : 'bg-slate-50 text-slate-700 border-slate-200 hover:border-[#00A3E0] hover:bg-cyan-50/50'
+                  ? 'bg-[#D90429] text-white border-[#D90429] shadow-lg shadow-red-500/40 scale-105 ring-2 ring-red-300'
+                  : 'bg-slate-50 text-slate-800 border-slate-200 hover:border-[#00A3E0] hover:bg-cyan-50/60'
               }`}
             >
               {type}
