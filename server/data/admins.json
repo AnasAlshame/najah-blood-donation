@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "_id": "admin_primary_najah",
+    "username": "adminnajah",
+    "fullName": "إدارة بنك دم جامعة النجاح",
+    "email": "adminnajah@najah.edu",
+    "password": "$2a$10$PJgIp2lVcXsw69G7mJ/k8OPxEtL6tX9HegBojy13MImdPCU27rCwy",
+    "role": "superadmin",
+    "createdAt": "2026-10-16T14:03:42.142Z"
+  }
+]
