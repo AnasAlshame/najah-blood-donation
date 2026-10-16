@@ -64,7 +64,7 @@ export default function HomePage() {
                 <ShieldCheck className="w-7 h-7 text-emerald-600" />
               </div>
               <div className="text-right">
-                <div className="text-base sm:text-lg font-black text-[#002B49] leading-snug">خصوصية وأمان 100%</div>
+                <div className="text-base sm:text-lg font-black text-[#002B49] leading-snug">خصوصية وأمان</div>
                 <div className="text-xs sm:text-sm text-slate-700 font-bold leading-normal mt-1">وصول مشفر ومقتصر على إدارة الجامعة</div>
               </div>
             </div>
