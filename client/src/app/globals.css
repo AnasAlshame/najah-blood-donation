@@ -21,11 +21,10 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Quranic class with dedicated Amiri font and beautiful spacing */
+  /* Quranic font: seamless Arabic cursive ligation with high diacritic clearance */
   .quran-ayah {
-    font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade New', serif !important;
-    font-feature-settings: "cv01" on, "ss01" on;
-    letter-spacing: 0.02em;
+    font-family: 'Noto Naskh Arabic', 'Amiri', 'Traditional Arabic', serif !important;
+    font-feature-settings: "liga" 1, "calt" 1;
   }
 }
 

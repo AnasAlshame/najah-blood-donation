@@ -27,10 +27,9 @@ export default function HomePage() {
           </div>
 
           {/* Clean, perfectly readable Arabic Quranic Ayah on a single line */}
-          {/* Clean, perfectly readable Arabic Quranic Ayah on a single line */}
           <div className="w-full overflow-hidden px-2">
-            <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-[#002B49] whitespace-nowrap text-center mx-auto py-2">
-              ( وَمَنْ أَحْيَاهَا فَكَأَ<span className="relative inline-block">نَ<span className="absolute -top-[0.55em] left-1/2 -translate-x-1/2 text-[0.8em] font-normal select-none pointer-events-none">ّ</span></span>مَا أَحْيَا ال<span className="relative inline-block">نَ<span className="absolute -top-[0.55em] left-1/2 -translate-x-1/2 text-[0.8em] font-normal select-none pointer-events-none">ّ</span></span>اسَ جَمِيعًا )
+            <h1 className="quran-ayah text-2xl sm:text-4xl md:text-5xl font-bold text-[#002B49] whitespace-nowrap text-center mx-auto py-2 leading-relaxed">
+              ( وَمَنْ أَحْيَاهَا فَكَأَنَّمَا أَحْيَا النَّاسَ جَمِيعًا )
             </h1>
           </div>
           
