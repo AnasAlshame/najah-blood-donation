@@ -12,16 +12,20 @@
     --neutral-surface: #F8FAFC;
   }
 
-  * {
-    font-family: 'Tajawal', 'Cairo', system-ui, -apple-system, sans-serif !important;
+  body {
+    background-color: #F8FAFC;
+    color: #0F172A;
+    font-family: 'Tajawal', 'Cairo', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
 
-  body {
-    background-color: #F8FAFC;
-    color: #0F172A;
+  /* Quranic class with dedicated Amiri font and beautiful spacing */
+  .quran-ayah {
+    font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade New', serif !important;
+    font-feature-settings: "cv01" on, "ss01" on;
+    letter-spacing: 0.02em;
   }
 }
 

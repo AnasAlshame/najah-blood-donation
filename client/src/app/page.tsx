@@ -28,10 +28,7 @@ export default function HomePage() {
 
           {/* Clean, perfectly readable Arabic Quranic Ayah on a single line */}
           <div className="w-full overflow-hidden px-2">
-            <h1 
-              style={{ fontFamily: "'Amiri', serif" }}
-              className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#002B49] tracking-normal leading-relaxed whitespace-nowrap text-center mx-auto"
-            >
+            <h1 className="quran-ayah text-3xl sm:text-5xl md:text-6xl font-bold text-[#002B49] whitespace-nowrap text-center mx-auto py-2">
               ( وَمَنْ أَحْيَاهَا فَكَأَنَّمَا أَحْيَا النَّاسَ جَمِيعًا )
             </h1>
           </div>
