@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Heart, CheckCircle2, AlertCircle, ShieldCheck, Sparkles } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Heart, CheckCircle2, AlertCircle, ShieldCheck } from 'lucide-react';
 import { DonorRegistrationInput } from '../../types';
 import { AN_NAJAH_FACULTIES, PALESTINIAN_CITIES } from '../../services/constants';
 import { apiService } from '../../services/api';
@@ -9,6 +10,7 @@ import { BloodTypeSelector } from './BloodTypeSelector';
 import { DonorPersonalFields } from './DonorPersonalFields';
 
 export const DonorForm: React.FC = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState<DonorRegistrationInput>({
     fullName: '',
     studentId: '',
@@ -33,22 +35,8 @@ export const DonorForm: React.FC = () => {
     try {
       const res = await apiService.registerDonor(formData);
       if (res.success) {
-        setStatusMessage({
-          type: 'success',
-          text: res.message || 'تم تسجيل بياناتك بنجاح! شكراً لمبادرتك الإنسانية.'
-        });
-        setFormData({
-          fullName: '',
-          studentId: '',
-          email: '',
-          phone: '',
-          bloodType: 'A+',
-          faculty: AN_NAJAH_FACULTIES[0],
-          city: PALESTINIAN_CITIES[0],
-          lastDonationDate: '',
-          healthCheckPassed: true,
-          notes: ''
-        });
+        // Smoothly redirect to dedicated success page
+        router.push('/success');
       } else {
         setStatusMessage({
           type: 'error',
