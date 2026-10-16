@@ -20,9 +20,12 @@ export const registerDonor = async (req: Request, res: Response): Promise<void> 
       return;
     }
 
+    const trimmedStudentId = studentId.trim();
+    const trimmedFullName = fullName.trim();
+
     const donorData = {
-      fullName: fullName.trim(),
-      studentId: studentId.trim(),
+      fullName: trimmedFullName,
+      studentId: trimmedStudentId,
       email: email.trim().toLowerCase(),
       phone: phone.trim(),
       bloodType,
@@ -36,9 +39,42 @@ export const registerDonor = async (req: Request, res: Response): Promise<void> 
     };
 
     if (isMongoConnected()) {
+      // Find existing donor by studentId or exact full name
+      const existingDonor = await Donor.findOne({
+        $or: [{ studentId: trimmedStudentId }, { fullName: trimmedFullName }]
+      });
+
+      if (existingDonor) {
+        Object.assign(existingDonor, donorData);
+        await existingDonor.save();
+        res.status(200).json({
+          success: true,
+          message: 'تم تحديث بيانات المتبرع بنجاح (المتبرع مسجل مسبقاً)!',
+          data: { id: existingDonor._id }
+        });
+        return;
+      }
+
       const donor = new Donor(donorData);
       await donor.save();
       res.status(201).json({ success: true, message: 'تم تسجيلك كمتبرع بالدم بنجاح!', data: { id: donor._id } });
+      return;
+    }
+
+    // JSON fallback check: find existing donor by studentId or fullName
+    const existing = await donorStore.findOne(
+      (d) =>
+        (d.studentId && d.studentId.trim() === trimmedStudentId) ||
+        (d.fullName && d.fullName.trim() === trimmedFullName)
+    );
+
+    if (existing && existing._id) {
+      const updated = await donorStore.findByIdAndUpdate(existing._id, donorData);
+      res.status(200).json({
+        success: true,
+        message: 'تم تحديث بيانات المتبرع بنجاح (المتبرع مسجل مسبقاً)!',
+        data: { id: updated?._id || existing._id }
+      });
       return;
     }
 
