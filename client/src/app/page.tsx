@@ -28,7 +28,10 @@ export default function HomePage() {
 
           {/* Clean, perfectly readable Arabic Quranic Ayah on a single line */}
           <div className="w-full overflow-hidden px-2">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-[#002B49] tracking-normal leading-normal whitespace-nowrap text-center mx-auto">
+            <h1 
+              style={{ fontFamily: "'Amiri', serif" }}
+              className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#002B49] tracking-normal leading-relaxed whitespace-nowrap text-center mx-auto"
+            >
               ( وَمَنْ أَحْيَاهَا فَكَأَنَّمَا أَحْيَا النَّاسَ جَمِيعًا )
             </h1>
           </div>
