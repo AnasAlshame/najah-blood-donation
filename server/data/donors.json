@@ -1,0 +1,16 @@
+[
+  {
+    "fullName": "محمد سامر عودة",
+    "studentId": "12014522",
+    "email": "s12014522@stu.najah.edu",
+    "phone": "0599123456",
+    "bloodType": "O-",
+    "faculty": "كلية الهندسة وتكنولوجيا المعلومات",
+    "city": "نابلس",
+    "healthCheckPassed": true,
+    "status": "available",
+    "_id": "id_1792155103553_um8mvl",
+    "createdAt": "2026-10-16T12:51:43.553Z",
+    "updatedAt": "2026-10-16T12:51:43.553Z"
+  }
+]
