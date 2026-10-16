@@ -77,7 +77,7 @@ export const DonorPersonalFields: React.FC<PersonalFieldsProps> = ({ formData, s
             required
             value={formData.phone}
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            placeholder="059xxxxxxx أو 056xxxxxxx"
+            placeholder="+970 / +972 05xxxxxxxx"
             className="w-full pr-12 pl-4 py-3.5 text-base font-semibold text-slate-900 rounded-2xl border-2 border-slate-200 focus:outline-none focus:border-[#00A3E0] focus:ring-4 focus:ring-[#00A3E0]/15 transition-all bg-white text-left dir-ltr"
           />
         </div>
