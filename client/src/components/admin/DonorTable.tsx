@@ -92,29 +92,29 @@ export const DonorTable: React.FC<DonorTableProps> = ({
 
                   {/* Donor Info */}
                   <td className="py-3 px-4">
-                    <div className="font-bold text-slate-800 text-sm">{donor.fullName}</div>
-                    <div className="text-xs text-slate-500 font-mono mt-0.5">الرقم: {donor.studentId}</div>
-                    <div className="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
-                      <Mail className="w-3 h-3 text-slate-400" />
+                    <div className="font-black text-slate-900 text-sm">{donor.fullName}</div>
+                    <div className="text-xs text-slate-700 font-bold font-mono mt-0.5">الرقم: {donor.studentId}</div>
+                    <div className="text-xs text-slate-700 font-semibold flex items-center gap-1 mt-0.5">
+                      <Mail className="w-3 h-3 text-slate-500" />
                       <span>{donor.email}</span>
                     </div>
                   </td>
 
                   {/* Blood Type Badge */}
                   <td className="py-3 px-4 text-center">
-                    <span className="inline-block px-3 py-1.5 rounded-xl bg-[#D90429] text-white font-black text-sm shadow-sm shadow-red-500/20">
+                    <span dir="ltr" className="inline-block px-3 py-1.5 rounded-xl bg-[#D90429] text-white font-black text-sm shadow-sm shadow-red-500/20">
                       {donor.bloodType}
                     </span>
                   </td>
 
                   {/* Faculty & City */}
                   <td className="py-3 px-4">
-                    <div className="text-xs font-semibold text-slate-700">{donor.faculty}</div>
-                    <div className="text-xs text-slate-500 mt-0.5">📍 {donor.city}</div>
+                    <div className="text-xs sm:text-sm font-black text-slate-900">{donor.faculty}</div>
+                    <div className="text-xs text-slate-700 font-bold mt-0.5">📍 {donor.city}</div>
                   </td>
 
                   {/* Registered Date & Last Donation */}
-                  <td className="py-3 px-4 text-xs text-slate-600">
+                  <td className="py-3 px-4 text-xs font-bold text-slate-800">
                     <div>
                       {new Date(donor.createdAt).toLocaleDateString('ar-EG', {
                         year: 'numeric',
@@ -123,7 +123,7 @@ export const DonorTable: React.FC<DonorTableProps> = ({
                       })}
                     </div>
                     {donor.lastDonationDate && (
-                      <div className="text-[11px] text-amber-700 mt-1 flex items-center gap-1">
+                      <div className="text-[11px] text-amber-800 font-black mt-1 flex items-center gap-1">
                         <Calendar className="w-3 h-3" />
                         <span>آخر تبرع: {new Date(donor.lastDonationDate).toLocaleDateString('ar-EG')}</span>
                       </div>
