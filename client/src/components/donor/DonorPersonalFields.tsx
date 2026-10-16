@@ -113,18 +113,23 @@ export const DonorPersonalFields: React.FC<PersonalFieldsProps> = ({ formData, s
         placeholder="dd/mm/yyyy"
       />
 
-      {/* Health Check */}
-      <div className="flex items-center gap-3.5 pt-4 sm:pt-6">
-        <input
-          type="checkbox"
-          id="healthCheck"
-          checked={formData.healthCheckPassed}
-          onChange={(e) => setFormData({ ...formData, healthCheckPassed: e.target.checked })}
-          className="w-6 h-6 text-[#002B49] rounded-lg border-2 border-slate-300 focus:ring-[#00A3E0] cursor-pointer shrink-0"
-        />
-        <label htmlFor="healthCheck" className="text-sm font-bold text-slate-800 cursor-pointer select-none leading-snug">
-          أؤكد أنني بصحة جيدة ووزني فوق 50 كغم ولا أعاني من موانع طبية للتبرع.
+      {/* Age Input */}
+      <div>
+        <label className="block text-sm font-bold text-slate-800 mb-2">
+          العمر (سنة) <span className="text-red-500">*</span>
         </label>
+        <div className="relative">
+          <input
+            type="number"
+            min={17}
+            max={65}
+            required
+            value={formData.age ?? ''}
+            onChange={(e) => setFormData({ ...formData, age: e.target.value ? parseInt(e.target.value, 10) : undefined })}
+            placeholder="مثال: 20"
+            className="w-full px-4 py-3.5 text-base font-semibold text-slate-900 rounded-2xl border-2 border-slate-200 focus:outline-none focus:border-[#00A3E0] focus:ring-4 focus:ring-[#00A3E0]/15 transition-all bg-white"
+          />
+        </div>
       </div>
     </div>
   );

@@ -9,9 +9,10 @@ export interface IDonor extends Document {
   bloodType: BloodType;
   faculty: string;
   city: string;
+  age?: number;
   lastDonationDate?: Date;
   status: 'available' | 'donated_recently' | 'unavailable';
-  healthCheckPassed: boolean;
+  healthCheckPassed?: boolean;
   notes?: string;
   createdAt: Date;
   updatedAt: Date;
@@ -54,6 +55,11 @@ const donorSchema = new Schema<IDonor>(
       type: String,
       required: [true, 'المدينة / مكان السكن مطلوب'],
       trim: true
+    },
+    age: {
+      type: Number,
+      min: [17, 'يجب أن لا يقل العمر عن 17 سنة'],
+      max: [70, 'يجب أن لا يتجاوز العمر 70 سنة']
     },
     lastDonationDate: {
       type: Date

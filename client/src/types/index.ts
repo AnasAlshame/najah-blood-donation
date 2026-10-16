@@ -9,9 +9,10 @@ export interface IDonor {
   bloodType: BloodType;
   faculty: string;
   city: string;
+  age?: number;
   lastDonationDate?: string;
   status: 'available' | 'donated_recently' | 'unavailable';
-  healthCheckPassed: boolean;
+  healthCheckPassed?: boolean;
   notes?: string;
   createdAt: string;
   updatedAt: string;
@@ -25,8 +26,9 @@ export interface DonorRegistrationInput {
   bloodType: BloodType;
   faculty: string;
   city: string;
+  age?: number;
   lastDonationDate?: string;
-  healthCheckPassed: boolean;
+  healthCheckPassed?: boolean;
   notes?: string;
 }
 

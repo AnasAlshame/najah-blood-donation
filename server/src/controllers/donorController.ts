@@ -8,7 +8,7 @@ const donorStore = new JsonStore<any>('donors');
 
 export const registerDonor = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { fullName, studentId, email, phone, bloodType, faculty, city, lastDonationDate, healthCheckPassed, notes } = req.body;
+    const { fullName, studentId, email, phone, bloodType, faculty, city, age, lastDonationDate, healthCheckPassed, notes } = req.body;
 
     if (!fullName || !studentId || !email || !phone || !bloodType || !faculty || !city) {
       res.status(400).json({ success: false, message: 'يرجى تعبئة كافة الحقول الإلزامية' });
@@ -28,6 +28,7 @@ export const registerDonor = async (req: Request, res: Response): Promise<void> 
       bloodType,
       faculty: faculty.trim(),
       city: city.trim(),
+      age: age ? Number(age) : undefined,
       lastDonationDate: lastDonationDate ? new Date(lastDonationDate) : undefined,
       healthCheckPassed: healthCheckPassed ?? true,
       notes: notes?.trim(),
