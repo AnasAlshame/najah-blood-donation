@@ -1,9 +1,8 @@
-'use client';
-
 import React from 'react';
 import { Search, Filter, RefreshCw, Users, FileSpreadsheet } from 'lucide-react';
 import { BloodType } from '../../types';
 import { BLOOD_TYPES, AN_NAJAH_FACULTIES, PALESTINIAN_CITIES, BLOOD_COMPATIBILITY } from '../../services/constants';
+import { CustomSelect } from '../common/CustomSelect';
 
 interface FiltersProps {
   selectedBloodType: string;
@@ -166,49 +165,39 @@ export const AdminFilters: React.FC<FiltersProps> = ({
       {/* Secondary dropdown filters */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {/* Faculty */}
-        <div>
-          <label className="block text-xs sm:text-sm font-black text-[#002B49] mb-1.5">الكلية</label>
-          <select
-            value={selectedFaculty}
-            onChange={(e) => setSelectedFaculty(e.target.value)}
-            className="w-full p-3 text-xs sm:text-sm font-bold text-slate-800 rounded-xl border-2 border-slate-200 bg-white focus:outline-none focus:border-[#00A3E0]"
-          >
-            <option value="all">جميع الكليات</option>
-            {AN_NAJAH_FACULTIES.map((f) => (
-              <option key={f} value={f}>{f}</option>
-            ))}
-          </select>
-        </div>
+        <CustomSelect
+          label="الكلية"
+          value={selectedFaculty}
+          options={[
+            { value: 'all', label: 'جميع الكليات' },
+            ...AN_NAJAH_FACULTIES.map((f) => ({ value: f, label: f }))
+          ]}
+          onChange={setSelectedFaculty}
+        />
 
         {/* City */}
-        <div>
-          <label className="block text-xs sm:text-sm font-black text-[#002B49] mb-1.5">مكان السكن / المدينة</label>
-          <select
-            value={selectedCity}
-            onChange={(e) => setSelectedCity(e.target.value)}
-            className="w-full p-3 text-xs sm:text-sm font-bold text-slate-800 rounded-xl border-2 border-slate-200 bg-white focus:outline-none focus:border-[#00A3E0]"
-          >
-            <option value="all">جميع المدن</option>
-            {PALESTINIAN_CITIES.map((c) => (
-              <option key={c} value={c}>{c}</option>
-            ))}
-          </select>
-        </div>
+        <CustomSelect
+          label="مكان السكن / المدينة"
+          value={selectedCity}
+          options={[
+            { value: 'all', label: 'جميع المدن' },
+            ...PALESTINIAN_CITIES.map((c) => ({ value: c, label: c }))
+          ]}
+          onChange={setSelectedCity}
+        />
 
         {/* Status */}
-        <div>
-          <label className="block text-xs sm:text-sm font-black text-[#002B49] mb-1.5">حالة التوفر</label>
-          <select
-            value={selectedStatus}
-            onChange={(e) => setSelectedStatus(e.target.value)}
-            className="w-full p-3 text-xs sm:text-sm font-bold text-slate-800 rounded-xl border-2 border-slate-200 bg-white focus:outline-none focus:border-[#00A3E0]"
-          >
-            <option value="all">جميع الحالات</option>
-            <option value="available">متاح للتبرع</option>
-            <option value="donated_recently">تبرع مؤخراً</option>
-            <option value="unavailable">غير متاح حالياً</option>
-          </select>
-        </div>
+        <CustomSelect
+          label="حالة التوفر"
+          value={selectedStatus}
+          options={[
+            { value: 'all', label: 'جميع الحالات' },
+            { value: 'available', label: 'متاح للتبرع' },
+            { value: 'donated_recently', label: 'تبرع مؤخراً' },
+            { value: 'unavailable', label: 'غير متاح حالياً' }
+          ]}
+          onChange={setSelectedStatus}
+        />
       </div>
 
     </div>
