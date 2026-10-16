@@ -28,44 +28,44 @@ export default function HomePage() {
 
           {/* Clean, perfectly readable Arabic Quranic Ayah on a single line */}
           <div className="w-full overflow-hidden px-2">
-            <h1 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-[#002B49] tracking-normal leading-normal whitespace-nowrap text-center mx-auto">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-[#002B49] tracking-normal leading-normal whitespace-nowrap text-center mx-auto">
               ( وَمَنْ أَحْيَاهَا فَكَأَنَّمَا أَحْيَا النَّاسَ جَمِيعًا )
             </h1>
           </div>
           
-          <p className="mt-4 text-base sm:text-lg text-slate-800 max-w-2xl mx-auto leading-relaxed font-medium">
+          <p className="mt-4 text-base sm:text-lg text-slate-900 max-w-2xl mx-auto leading-relaxed font-bold">
             منظومة إنسانية جامعية متكاملة وموثوقة لربط المرضى في المستشفيات بالمتبرعين من طلبة جامعة النجاح الوطنية في حالات الطوارئ الطبية وبسرية تامة.
           </p>
 
-          {/* Quick value props cards with crisp, distinct and readable fonts */}
+          {/* Quick value props cards with bold, crisp, readable fonts */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 max-w-4xl mx-auto mt-10">
-            <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition-all flex items-center gap-4">
-              <div className="w-13 h-13 rounded-2xl bg-red-50 flex items-center justify-center shrink-0 border border-red-100 shadow-2xs">
-                <Heart className="w-6 h-6 text-[#D90429] fill-red-100" />
+            <div className="bg-white p-5 rounded-2xl border-2 border-slate-200 shadow-sm hover:shadow-md transition-all flex items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-red-50 flex items-center justify-center shrink-0 border border-red-100 shadow-2xs">
+                <Heart className="w-7 h-7 text-[#D90429] fill-red-100" />
               </div>
               <div className="text-right">
-                <div className="text-base font-extrabold text-[#002B49] leading-snug">إنقاذ سريع للحياة</div>
-                <div className="text-xs text-slate-600 font-medium leading-relaxed mt-1">استجابة طارئة وفورية للمستشفيات</div>
+                <div className="text-base sm:text-lg font-black text-[#002B49] leading-snug">إنقاذ سريع للحياة</div>
+                <div className="text-xs sm:text-sm text-slate-700 font-bold leading-normal mt-1">استجابة طارئة وفورية للمستشفيات</div>
               </div>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition-all flex items-center gap-4">
-              <div className="w-13 h-13 rounded-2xl bg-cyan-50 flex items-center justify-center shrink-0 border border-cyan-100 shadow-2xs">
-                <Activity className="w-6 h-6 text-[#00A3E0]" />
+            <div className="bg-white p-5 rounded-2xl border-2 border-slate-200 shadow-sm hover:shadow-md transition-all flex items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-cyan-50 flex items-center justify-center shrink-0 border border-cyan-100 shadow-2xs">
+                <Activity className="w-7 h-7 text-[#00A3E0]" />
               </div>
               <div className="text-right">
-                <div className="text-base font-extrabold text-[#002B49] leading-snug">محرك توافق ذكي</div>
-                <div className="text-xs text-slate-600 font-medium leading-relaxed mt-1">مطابقة حيوية دقيقة للفصائل المتوافقة</div>
+                <div className="text-base sm:text-lg font-black text-[#002B49] leading-snug">محرك توافق ذكي</div>
+                <div className="text-xs sm:text-sm text-slate-700 font-bold leading-normal mt-1">مطابقة حيوية دقيقة للفصائل المتوافقة</div>
               </div>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition-all flex items-center gap-4">
-              <div className="w-13 h-13 rounded-2xl bg-emerald-50 flex items-center justify-center shrink-0 border border-emerald-100 shadow-2xs">
-                <ShieldCheck className="w-6 h-6 text-emerald-600" />
+            <div className="bg-white p-5 rounded-2xl border-2 border-slate-200 shadow-sm hover:shadow-md transition-all flex items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center shrink-0 border border-emerald-100 shadow-2xs">
+                <ShieldCheck className="w-7 h-7 text-emerald-600" />
               </div>
               <div className="text-right">
-                <div className="text-base font-extrabold text-[#002B49] leading-snug">خصوصية وأمان 100%</div>
-                <div className="text-xs text-slate-600 font-medium leading-relaxed mt-1">وصول مشفر ومقتصر على إدارة الجامعة</div>
+                <div className="text-base sm:text-lg font-black text-[#002B49] leading-snug">خصوصية وأمان 100%</div>
+                <div className="text-xs sm:text-sm text-slate-700 font-bold leading-normal mt-1">وصول مشفر ومقتصر على إدارة الجامعة</div>
               </div>
             </div>
           </div>
