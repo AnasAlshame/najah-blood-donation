@@ -2,6 +2,7 @@ import React from 'react';
 import { User, GraduationCap, Mail, Phone, MapPin, Calendar } from 'lucide-react';
 import { DonorRegistrationInput } from '../../types';
 import { AN_NAJAH_FACULTIES, PALESTINIAN_CITIES } from '../../services/constants';
+import { CustomSelect } from '../common/CustomSelect';
 
 interface PersonalFieldsProps {
   formData: DonorRegistrationInput;
@@ -84,39 +85,24 @@ export const DonorPersonalFields: React.FC<PersonalFieldsProps> = ({ formData, s
       </div>
 
       {/* Faculty */}
-      <div>
-        <label className="block text-sm font-bold text-slate-800 mb-2">
-          الكلية <span className="text-red-500">*</span>
-        </label>
-        <select
-          value={formData.faculty}
-          onChange={(e) => setFormData({ ...formData, faculty: e.target.value })}
-          className="w-full px-4 py-3.5 text-base font-semibold text-slate-900 rounded-2xl border-2 border-slate-200 focus:outline-none focus:border-[#00A3E0] bg-white cursor-pointer"
-        >
-          {AN_NAJAH_FACULTIES.map((fac) => (
-            <option key={fac} value={fac}>{fac}</option>
-          ))}
-        </select>
-      </div>
+      <CustomSelect
+        label="الكلية"
+        required
+        value={formData.faculty}
+        options={AN_NAJAH_FACULTIES}
+        onChange={(val) => setFormData({ ...formData, faculty: val })}
+        icon={<GraduationCap className="w-5 h-5" />}
+      />
 
       {/* City */}
-      <div>
-        <label className="block text-sm font-bold text-slate-800 mb-2">
-          مكان السكن / المدينة <span className="text-red-500">*</span>
-        </label>
-        <div className="relative">
-          <MapPin className="w-5 h-5 text-slate-400 absolute right-4 top-4" />
-          <select
-            value={formData.city}
-            onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-            className="w-full pr-12 pl-4 py-3.5 text-base font-semibold text-slate-900 rounded-2xl border-2 border-slate-200 focus:outline-none focus:border-[#00A3E0] bg-white cursor-pointer"
-          >
-            {PALESTINIAN_CITIES.map((city) => (
-              <option key={city} value={city}>{city}</option>
-            ))}
-          </select>
-        </div>
-      </div>
+      <CustomSelect
+        label="مكان السكن / المدينة"
+        required
+        value={formData.city}
+        options={PALESTINIAN_CITIES}
+        onChange={(val) => setFormData({ ...formData, city: val })}
+        icon={<MapPin className="w-5 h-5" />}
+      />
 
       {/* Last Donation Date */}
       <div>
